@@ -12,6 +12,17 @@ router.get('', async function(req, res, next) {
   }
 });
 
+router.get('/:id', async function(req, res, next) {
+  try {
+    const data = await db.query('SELECT * FROM users WHERE id=$1', [
+      req.params.id
+    ]);
+    return res.json(data.rows);
+  } catch (err) {
+    return next(err);
+  }
+});
+
 router.post('', async function(req, res, next) {
   try {
     const data = await db.query(
